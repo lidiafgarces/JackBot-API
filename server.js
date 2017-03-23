@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended:true }));
 app.use(bodyParser.json());
 
 // Set our port
-var port = 8080;
+var port = process.env.PORT || 8080;
 
 // Prefix our routes with with /simple-api
 app.use('/simple-api', apiRoute);
