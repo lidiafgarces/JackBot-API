@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 var port = process.env.PORT || 8080;
 
 // Prefix our routes with with /simple-api
-app.use('/simple-api', apiRoute);
+app.use('/api', apiRoute);
 
 // START THE SERVER
 app.listen(port);

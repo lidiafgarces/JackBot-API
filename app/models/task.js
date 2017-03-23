@@ -7,7 +7,6 @@ module.exports = mongoose.model('Task', new Schema({
     title: String,
     description: String,
     reward: Number,
-    estimated_time: Number,
     location: {
     	coordinate_x: String,
     	coordinate_y: String,
@@ -21,15 +20,6 @@ module.exports = mongoose.model('Task', new Schema({
     			contentType: String 
     		},
     	item_options: [String],
-    }],
-    answer_type: String,
-    answer: {
-    	user_id: String,
-    	answer_text: String,
-    	answer_picture: 
-    		{ 
-    			data: Buffer, 
-    			contentType: String 
-    		}
-    }
+    	item_answer_type: String,
+    }]
 }));
