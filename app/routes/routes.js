@@ -1,6 +1,7 @@
 // Set up express and include our Task model
 var express = require('express');
 var Task = require('../models/task');
+var Answer = require('../models/answer');
 
 // Get an instance of the express router
 var router = express.Router();
@@ -129,6 +130,60 @@ router.route('/tasks/:task_id')
 
         res.json({ message: 'Successfully removed!' });
     });
+})
+
+
+// Our first second of routes, those that end with /answers
+router.route('/answers')
+
+/*
+// When we POST to the /tasks route we want to create 
+// a new task from the data sent in the request. We're 
+// going to assume that our new tasks come packaged with 
+// a friend (a la MySpace Tom), though we could easily 
+// initialize this to an empty array as well.
+*/
+.post(function(req,res){
+
+    var answer = new Answer();
+
+    console.log(req.body);
+  
+    // Set the task name, and add our friend to the friends array 
+    answer.user_id = req.body.user_id; 
+    answer.task_id = req.body.task_id; 
+    answer.answers = req.body.answers; 
+
+    //task = req.body;
+
+    //task.friends.push(req.body.friends); 
+
+    // Save the task to the database
+    // If we don't get any errors respond with a success message
+    answer.save(function(err){
+        if (err) { res.send(err); }
+
+        res.json({ message: 'We have created a new answer!' });
+    });
+})
+
+/* 
+// When we make a GET request to /tasks we want 
+// to return all of our tasks in the response as 
+// a JSON object.
+//
+// We'll use mongoose to find our task documents, 
+// and if there are no errors, we'll send a response 
+// containing our tasks as JSON
+*/
+.get(function(req,res){
+
+    Answer.find(function(err, answers){
+        if (err){ res.send(err); }
+
+        res.json(answers);
+    });
+
 })
 
 module.exports = router;
