@@ -39,10 +39,10 @@ router.route('/tasks')
 
     // Save the task to the database
     // If we don't get any errors respond with a success message
-    task.save(function(err){
+    task.save(function(err, task){
         if (err) { res.send(err); }
 
-        res.json({ message: 'We have created a new task!' });
+        res.json({ message: 'We have created a new task! The id for the task is ' + task.id});
     });
 })
 
@@ -132,6 +132,18 @@ router.route('/tasks/:task_id')
     });
 })
 
+// Routes for a specific task, ending in /tasks/:task_id
+router.route('/tasks/:task_id/answers')
+
+.get(function (req,res){
+
+    Answer.find({task_id: req.params.task_id}, function(err, answers){
+        if (err){ res.send(err); }
+
+        res.json(answers);
+    });
+})
+
 
 // Our first second of routes, those that end with /answers
 router.route('/answers')
@@ -160,10 +172,11 @@ router.route('/answers')
 
     // Save the task to the database
     // If we don't get any errors respond with a success message
-    answer.save(function(err){
+    answer.save(function(err, answer){
         if (err) { res.send(err); }
-
-        res.json({ message: 'We have created a new answer!' });
+        console.log('\n');
+        console.log(answer.id);
+        res.json({ message: 'We have created a new answer! The id of the answer is ' + answer.id});
     });
 })
 
@@ -184,6 +197,67 @@ router.route('/answers')
         res.json(answers);
     });
 
+})
+
+// Routes for a specific task, ending in /tasks/:task_id
+router.route('/answers/:answer_id')
+
+/*
+// When we make a GET request for a specific task,
+// we want to return that task as a JSON object.
+
+// We'll use mongoose to find our task by their id, 
+// and if there are no errors, we'll send a response 
+// containing our task data as JSON
+
+// As a side note, you may have noticed that we didn't
+// create a task_id parameter in our schema, this parameter
+// is automatically uniquely assigned by MongoDB. We can use 
+// our own unique keys if we so choose.
+*/
+.get(function (req,res){
+
+    Answer.findById(req.params.answer_id, function(err, answer){
+        if (err){ res.send(err); }
+
+        res.json(answer);
+    });
+})
+
+/*
+// When we make a PUT request we want to update 
+// the answer with the specified id using the data 
+// in the request, if there are no errors we'll 
+// respond with a success message.
+*/
+.put(function(req,res){
+    Answer.findById(req.params.answer_id, function(err, answer){
+        if (err){ res.send(err); }
+
+        answer.user_id = req.body.user_id; 
+        answer.task_id = req.body.task_id; 
+        answer.answers = req.body.answers; 
+
+        answer.save(function(err){
+            if (err) { res.send(err); }
+
+            res.json({ message: 'Answer Updated!' });
+        });
+    });
+})
+
+/*
+// When we make a DELETE request we want to 
+// remove the answer with the specified id, if 
+// there are no errors we'll again respond 
+// with a success message
+*/
+.delete(function(req, res){
+    Answer.remove({_id:req.params.answer_id}, function(err, answer){
+        if (err){ res.send(err); }
+
+        res.json({ message: 'Successfully removed!' });
+    });
 })
 
 module.exports = router;
