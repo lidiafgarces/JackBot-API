@@ -111,26 +111,11 @@ router.route('/tasks/:task_id')
 
 router.route('/tasks/:task_id/answers')
 
-.get(function (req,res){
-
-    Task.findById(req.params.task_id, function(err, task){
-        if (err){ return res.send(err); }
-        console.log(task);
-
-        res.json(task.answers);
-    });
-})
-
-router.route('/answers')
-
 .post(function(req,res){
 
-    console.log(req.body);
-
     if(req.body.task_id && (req.body.answers.length>0)){
-        Task.findById(req.body.task_id, function(err, task){
+        Task.findById(req.params.task_id, function(err, task){
             if (err){ return res.send(err); }
-            console.log(task);
 
             var answer = {};
 
@@ -149,6 +134,17 @@ router.route('/answers')
     }
 })
 
+.get(function (req,res){
+
+    Task.findById(req.params.task_id, function(err, task){
+        if (err){ return res.send(err); }
+
+        res.json(task.answers);
+    });
+})
+
+router.route('/answers')
+
 .get(function(req,res){
 
     Task.find(function(err, tasks){
@@ -165,7 +161,6 @@ router.route('/tasks/:task_id/answers/:answer_id')
 
     Task.findById(req.params.task_id, function(err, task){
         if (err){ return res.send(err); }
-        console.log(task.answers);
         if(!task.answers.id(req.params.answer_id)) { return res.json({ message: 'There is no answer with id ' + req.params.answer_id + ' in task ' + req.params.task_id }) };;
 
         res.json(task.answers.id(req.params.answer_id));
