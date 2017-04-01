@@ -1,7 +1,7 @@
 // Set up express and include our Task model
 var express = require('express');
 var Task = require('../models/task');
-var Answer = require('../models/answer');
+//var Answer = require('../models/answer');
 
 var router = express.Router();
 
@@ -113,8 +113,9 @@ router.route('/tasks/:task_id/answers')
 
 .get(function (req,res){
 
-    Task.find({task_id: req.params.task_id}, function(err, answers){
+    Task.findById(req.params.task_id, function(err, task){
         if (err){ return res.send(err); }
+        console.log(task);
 
         res.json(task.answers);
     });
@@ -164,7 +165,8 @@ router.route('/tasks/:task_id/answers/:answer_id')
 
     Task.findById(req.params.task_id, function(err, task){
         if (err){ return res.send(err); }
-        if(!task.answers.id(req.params.answer_id)) { return res.json({ message: 'There is not answer with id ' + req.params.answer_id + ' in task ' + req.params.task_id }) };;
+        console.log(task.answers);
+        if(!task.answers.id(req.params.answer_id)) { return res.json({ message: 'There is no answer with id ' + req.params.answer_id + ' in task ' + req.params.task_id }) };;
 
         res.json(task.answers.id(req.params.answer_id));
     });
