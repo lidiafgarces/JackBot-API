@@ -7,7 +7,12 @@ module.exports = mongoose.model('Task', new Schema({
     reward: Number,
     number_of_answers: Number,
     flag_out_users: [String],
-    review_task: Boolean,
+    needs_review: Boolean,
+    webhook_url: {
+    	host: String,
+    	port: String,
+    	path: String,
+    },
     location: {
     	coordinate_x: String,
     	coordinate_y: String,
@@ -35,5 +40,48 @@ module.exports = mongoose.model('Task', new Schema({
 	    			contentType: String 
 	    		}*/
 	    }]
-	}]
+	}],
+	review_ids: {
+    	task_id: String,
+    	answer_id: String,
+    },
+    answers_to_review: [{
+	    user_id: String,
+	    reviews: [Boolean],
+	    questions_answers: [{
+	    	answer_text: String,
+	        answer_picture_url: String
+	    	/*answer_picture: 
+	    		{ 
+	    			data: Buffer, 
+	    			contentType: String 
+	    		}*/
+	    }]
+	}],
+	answers_accepted: [{
+	    user_id: String,
+	    reviews: [Boolean],
+	    questions_answers: [{
+	    	answer_text: String,
+	        answer_picture_url: String
+	    	/*answer_picture: 
+	    		{ 
+	    			data: Buffer, 
+	    			contentType: String 
+	    		}*/
+	    }]
+	}],
+	answers_rejected: [{
+	    user_id: String,
+	    reviews: [Boolean],
+	    questions_answers: [{
+	    	answer_text: String,
+	        answer_picture_url: String
+	    	/*answer_picture: 
+	    		{ 
+	    			data: Buffer, 
+	    			contentType: String 
+	    		}*/
+	    }]
+	}],
 }));
