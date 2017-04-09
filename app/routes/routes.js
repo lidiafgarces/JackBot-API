@@ -75,6 +75,7 @@ router.route('/tasks/todo')
 router.route('/tasks/:task_id')
 
 .get(function (req,res){
+    console.log(req.params.task_id);
 
     Task.findById(req.params.task_id, function(err, task){
         if (err){ return res.send(err); }
@@ -259,15 +260,15 @@ function createReviewTask(task, callback){
 
             for (var i = 0; i < task.items.length; i++) {
                 var newItem = {};
-                newItem.item_question = 'Does the answer to this question make sense?';
-                newItem.item_text = 'Question: ' + task.items[i].item_question + ' "' + task.items[i].item_text + ' ". Answer: ' + answer_to_review[i].answer_text;
+                newItem.item_question = 'Is the answer to this question correct?';
+                newItem.item_text = '_*Question*_\n' + task.items[i].item_question + '\n```' + task.items[i].item_text + '```\n_*Answer*_\n```' + answer_to_review[i].answer_text + ' ```';
                 newItem.item_picture_url = task.items[i].item_picture_url ||  answer_to_review[i].answer_picture_url || "";
                 newItem.item_options = ["Yes", "No", "I am not sure"];
                 newItem.item_answer_type = 'option';
                 items.push(newItem);
             }
 
-            newTask.title = "Review Task"; 
+            newTask.title = "Review Task: "+ task.title; 
             newTask.description = "We will show you a set of questions already answered. Please, indicate if they are properly answered. You don't need to know if the answer is correct, but you need to indicate if it makes sense. For example, if they are asking 'What is the color of this T-shirt' a correct answers can be 'blue' or 'red', but not 'elephant'."; 
             newTask.reward = 0;
             newTask.number_of_answers = 3;
@@ -281,19 +282,13 @@ function createReviewTask(task, callback){
                 "task_id": task.id,
                 "answer_id": task.answers_to_review[task.answers_to_review.length-1].id
             };
-            console.log(newTask.review_ids);
-            console.log('********');
-            console.log(newTask);
-            console.log('********');
             newTask.save(function(err, updatedTask){
                 if (err) { callback(err); }
-                console.log("Task updated");
                 var response = { 
                     message: 'We have created a new answer! The id of the answer is ' + task.answers_to_review[task.answers_to_review.length-1].id + ". We have also created a task with id " + updatedTask.id + "to review this answer.",
                     answer_id: task.answers_to_review[task.answers_to_review.length-1].id,
                     task_id: updatedTask.id
                 };
-                console.log(response);
                 callback(null, response);
             });
 
