@@ -64,7 +64,7 @@ router.route('/tasks/todo')
 
 .get(function(req,res){
 
-    Task.find({ $where : "(this.answers.length + this.answers_to_review.length) >= this.number_of_answers" }).select('-answers').exec(function(err, tasks){
+    Task.find({ $where : "(this.answers.length + this.answers_to_review.length) < this.number_of_answers" }).select('-answers').exec(function(err, tasks){
         if (err){ return res.send(err); }
 
         res.json(tasks);
@@ -260,8 +260,14 @@ function createReviewTask(task, callback){
 
             for (var i = 0; i < task.items.length; i++) {
                 var newItem = {};
+                var itemText = "";
+                if (task.items[i].item_text) { itemText = '\n```' + task.items[i].item_text + '```'; }
+                var answerText = "";
+                if (task.items[i].item_text) { answerText = '\n_*Answer*_\n```' + answer_to_review[i].answer_text + ' ```' };
+
                 newItem.item_question = 'Is the answer to this question correct?';
-                newItem.item_text = '_*Question*_\n' + task.items[i].item_question + '\n```' + task.items[i].item_text + '```\n_*Answer*_\n```' + answer_to_review[i].answer_text + ' ```';
+                //newItem.item_text = '_*Question*_\n' + task.items[i].item_question + '\n```' + task.items[i].item_text + '```\n_*Answer*_\n```' + answer_to_review[i].answer_text + ' ```';
+                newItem.item_text = '_*Question*_\n' + task.items[i].item_question + itemText + answerText;
                 newItem.item_picture_url = task.items[i].item_picture_url ||  answer_to_review[i].answer_picture_url || "";
                 newItem.item_options = ["Yes", "No", "I am not sure"];
                 newItem.item_answer_type = 'option';
