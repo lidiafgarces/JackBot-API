@@ -303,6 +303,7 @@ function createReviewTask(task, callback){
 }
 
 function updateReviews(task){
+    console.log(task);
     console.log(task.review_ids);
 
     Task.findById(task.review_ids.task_id, function(err, task_under_review){
