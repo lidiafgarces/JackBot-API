@@ -308,6 +308,8 @@ function updateReviews(task){
 
         if (err){ return res.send(err); }
 
+        console.log(task_under_review);
+
         var answer_under_review = task_under_review.answers_to_review.id(task.review_ids.answer_id);
         var answer_to_question = task.answers[task.answers.length-1];
 
