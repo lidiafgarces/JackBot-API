@@ -29,22 +29,27 @@ router.route('/tasks')
     task.review_ids = {};
 
     var mandatoryFilled = task.title && task.description && task.reward && (task.items.length>0) && task.number_of_answers;
+    var correctOptions = true;
 
     for(itemIdx in req.body.items){
         if (!req.body.items[itemIdx].item_question) mandatoryFilled=false;
         if (!req.body.items[itemIdx].item_answer_type) mandatoryFilled=false;
+        if(req.body.items[itemIdx].item_answer_type){
+            if (correctOptions) correctOptions = req.body.items[itemIdx].item_answer_type==='picture' || req.body.items[itemIdx].item_answer_type==='option' || req.body.items[itemIdx].answer_type==='text';
+        }
     }
 
     if(req.body.items.length>10) {
         res.status('400').send('Bad Request. The maximum number of item is 10.');
     }else{
-        if(mandatoryFilled){
+        if(mandatoryFilled && correctOptions){
             task.save(function(err, task){
                 if (err) { res.send(err); }
                 res.json({ message: 'We have created a new task! The id for the task is ' + task.id, task_id: task.id});
             });
         }else{
-            res.status('400').send('Bad Request. A mandatory field is empty.');
+            if(!mandatoryFilled) res.status('400').send('Bad Request. A mandatory field is empty.');
+            if(!correctOptions) res.status('400').send('Bad Request. The choice of option for the answer is incorrect.');
         }
     }
 
