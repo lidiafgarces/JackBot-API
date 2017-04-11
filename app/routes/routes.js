@@ -35,7 +35,9 @@ router.route('/tasks')
         if (!req.body.items[itemIdx].item_question) mandatoryFilled=false;
         if (!req.body.items[itemIdx].item_answer_type) mandatoryFilled=false;
         if(req.body.items[itemIdx].item_answer_type){
-            if (correctOptions) correctOptions = req.body.items[itemIdx].item_answer_type==='picture' || req.body.items[itemIdx].item_answer_type==='option' || req.body.items[itemIdx].answer_type==='text';
+            console.log(req.body.items[itemIdx].item_answer_type);
+            //if (correctOptions) correctOptions = req.body.items[itemIdx].item_answer_type==='picture' || req.body.items[itemIdx].item_answer_type==='option' || req.body.items[itemIdx].answer_type==='text';
+            console.log(req.body.items[itemIdx].answer_type==='text');
         }
     }
 
