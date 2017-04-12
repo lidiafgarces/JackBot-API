@@ -68,6 +68,16 @@ router.route('/tasks')
 
 })
 
+router.route('/tasks/deleteAll')
+
+.delete(function(req, res){
+    Task.collection.drop(function(err, task){
+        if (err){ return res.send(err); }
+
+        res.json({ message: 'All tasks has been successfully removed!' });
+    });
+})
+
 router.route('/tasks/todo')
 
 .get(function(req,res){
