@@ -271,7 +271,7 @@ function createReviewTask(task, callback){
                 var itemText = "";
                 if (task.items[i].item_text) { itemText = '\n```' + task.items[i].item_text + '```'; }
                 var answerText = "";
-                if (task.items[i].item_text) { answerText = '\n_*Answer*_\n```' + answer_to_review[i].answer_text + ' ```' };
+                if (task.items[i].answer_text) { answerText = '\n_*Answer*_\n```' + answer_to_review[i].answer_text + ' ```' };
 
                 newItem.item_question = 'Is the answer to this question correct?';
                 //newItem.item_text = '_*Question*_\n' + task.items[i].item_question + '\n```' + task.items[i].item_text + '```\n_*Answer*_\n```' + answer_to_review[i].answer_text + ' ```';
