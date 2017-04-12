@@ -169,7 +169,7 @@ router.route('/tasks/:task_id/answers')
                             answer_id: task.answers[task.answers.length-1].id
                         };
                         console.log(task.webhook_url);
-                        if(task.webhook_url.host && task.webhook_url.path) sendAnswerNotification(task.webhook_url, task.answers[task.answers.length-1]);
+                        if(task.webhook_url.host && task.webhook_url.path) sendAnswerNotification(task.webhook_url, task.id, task.answers[task.answers.length-1]);
                     //}
                     res.json(response);
                 });
@@ -284,7 +284,7 @@ function createReviewTask(task, callback){
 
             newTask.title = "Review Task: "+ task.title; 
             newTask.description = "We will show you a set of questions already answered. Please, indicate if they are properly answered. You don't need to know if the answer is correct, but you need to indicate if it makes sense. For example, if they are asking 'What is the color of this T-shirt' a correct answers can be 'blue' or 'red', but not 'elephant'."; 
-            newTask.reward = 0;
+            newTask.reward = 1;
             newTask.number_of_answers = 3;
             // What if more than one answer posted?
             newTask.flag_out_users = task.answers_to_review[task.answers_to_review.length-1].user_id || "";
@@ -372,7 +372,7 @@ function updateReviews(task){
                     console.log('We are going to send the webhook');
                     console.log(taskReviewedUpdated);
                     console.log(taskReviewedUpdated.answers[taskReviewedUpdated.answers.length-1]);
-                    if(positiveReviews>1) { sendAnswerNotification(taskReviewedUpdated.webhook_url, taskReviewedUpdated.answers[taskReviewedUpdated.answers.length-1]); }
+                    if(positiveReviews>1) { sendAnswerNotification(taskReviewedUpdated.webhook_url, taskReviewedUpdated.id, taskReviewedUpdated.answers[taskReviewedUpdated.answers.length-1]); }
                 });
             }
 
@@ -380,20 +380,28 @@ function updateReviews(task){
     })
 }
 
-function sendAnswerNotification(webhook_url, answer){
+function sendAnswerNotification(webhook_url, task_id, answer){
     console.log("Send webhook");
     var http = require("http");
     console.log(webhook_url);
-    var options = {
+
+    var body = JSON.stringify({
+        task_id: task_id,
+        answer: answer
+    });
+
+    var request = new http.ClientRequest({
       hostname: webhook_url.host,
       port: webhook_url.port || '',
       path: webhook_url.path,
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
+          "Content-Length": Buffer.byteLength(body)
       }
-    };
-    console.log(options);
+    });
+    
+    /*console.log(options);
     var request = http.request(options, function(res) {
       console.log('Status: ' + res.statusCode);
       console.log('Headers: ' + JSON.stringify(res.headers));
@@ -406,8 +414,10 @@ function sendAnswerNotification(webhook_url, answer){
       console.log('problem with request: ' + e.message);
     });
     // write data to request body
-    request.write(JSON.stringify(answer));
-    request.end();
+    console.log(answer_with_id);*/
+    //request.write(JSON.stringify(answer_with_id));
+    request.end(body);
+
 }
 
 function areAnswersCorrect(answers){
