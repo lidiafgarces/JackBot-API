@@ -269,7 +269,7 @@ function createReviewTask(task, callback){
             for (var i = 0; i < task.items.length; i++) {
                 var newItem = {};
                 var itemText = "";
-                if (task.items[i].item_text) { itemText = '\n```' + task.items[i].item_text + '```'; }
+                if (task.items[i].item_text) { itemText = '\n' + task.items[i].item_text; }
                 var answerText = "";
                 if (task.items[i].answer_text) { answerText = '\n_*Answer*_\n```' + answer_to_review[i].answer_text + ' ```' };
 
@@ -389,6 +389,8 @@ function sendAnswerNotification(webhook_url, task_id, answer){
         task_id: task_id,
         answers: answer
     });
+
+    console.log(body);
 
     var request = new http.ClientRequest({
       hostname: webhook_url.host,
