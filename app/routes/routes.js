@@ -387,7 +387,7 @@ function sendAnswerNotification(webhook_url, task_id, answer){
 
     var body = JSON.stringify({
         task_id: task_id,
-        answer: answer
+        answers: answer
     });
 
     var request = new http.ClientRequest({
