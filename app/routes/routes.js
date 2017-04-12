@@ -21,6 +21,7 @@ router.route('/tasks')
     task.webhook_url = req.body.webhook_url;
     task.location = req.body.location;
     task.items = req.body.items;
+    task.task_type = req.body.task_type;
     task.answer_type = req.body.answer_type;
     task.answers = [];
     task.answers_to_review = [];
