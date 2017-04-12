@@ -129,7 +129,7 @@ router.route('/tasks/:task_id/answers')
     if(req.body.answers.length>0){
         Task.findById(req.params.task_id, function(err, task){
             if (err){ return res.send(err); }
-
+            console.log(req.body.answers);
             if(req.body.answers.length !== task.items.length){
                 return res.status('400').send('Bad Request. The number of questions and the number answers differs.');
             }
@@ -149,6 +149,7 @@ router.route('/tasks/:task_id/answers')
             if(task.needs_review){
                 console.log('The task needs review');
                 task.answers_to_review.push(answer);
+                task.flag_out_users.push(req.body.user_id);
                 task.save(function(err, updatedTask){
                     if (err) { return res.send(err); }
                     createReviewTask(task, function(err, response){
@@ -161,6 +162,7 @@ router.route('/tasks/:task_id/answers')
             }else{
                 console.log('The task doesnt need review');
                 task.answers.push(answer);
+                task.flag_out_users.push(req.body.user_id);
                 task.save(function(err, updatedTask){
                 if (err) { return res.send(err); }
                     //if(!response.message) {
@@ -234,7 +236,16 @@ router.route('/tasks/:task_id/answers/:answer_id')
         if (err){ return res.send(err); }
         
         //new
-        if(!task.answers.id(req.params.task_id) && !task.answers_to_review.id(req.params.answer_id)) { return res.json({ message: 'There is not answer with id ' + req.params.answer_id + ' in task ' + req.params.task_id }) };;
+        console.log('check delete');
+        console.log(task.answers.id(req.params.answer_id));
+        console.log(task.answers.id(req.params.answer_id)!==null);
+        console.log(task.answers_to_review.id(req.params.answer_id));
+        console.log(task.answers_to_review.id(req.params.answer_id)!==null);
+        console.log('Finally:');
+        var existAnswer = false;
+        if((task.answers.id(req.params.task_id) !== null) || (task.answers_to_review.id(req.params.answer_id) !== null)) existAnswer=true;
+        console.log(existAnswer);
+        if(!(task.answers.id(req.params.task_id) || task.answers_to_review.id(req.params.answer_id))) { return res.json({ message: 'There is not answer with id ' + req.params.answer_id + ' in task ' + req.params.task_id }) };;
 
         if(task.answers.id(req.params.answer_id)){
             task.answers.pull({'_id': req.params.answer_id});
@@ -279,6 +290,7 @@ function createReviewTask(task, callback){
                 newItem.item_picture_url = task.items[i].item_picture_url ||  answer_to_review[i].answer_picture_url || "";
                 newItem.item_options = ["Yes", "No", "I am not sure"];
                 newItem.item_answer_type = 'option';
+                newItem.flag_out_users = task.flag_out_users;
                 items.push(newItem);
             }
 
