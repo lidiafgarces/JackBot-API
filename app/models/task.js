@@ -7,6 +7,7 @@ module.exports = mongoose.model('Task', new Schema({
     reward: Number,
     number_of_answers: Number,
     flag_out_users: [String],
+    task_type: String,
     needs_review: Boolean,
     webhook_url: {
     	host: String,
@@ -16,6 +17,7 @@ module.exports = mongoose.model('Task', new Schema({
     location: {
     	coordinate_x: String,
     	coordinate_y: String,
+    	name: String,
     },
     items: [{
     	item_question: String,
