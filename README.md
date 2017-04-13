@@ -34,7 +34,7 @@ It retrieves the list of tasks that do not have a enough answers from the databa
 
 It retrieves the list of tasks that do not have a enough answers from the database.E
 
-### GET /tasks/:task_id
+### GET /tasks/:task_id
 
 It retrieves the task with the correspondly ‘task_id’.
 
@@ -146,9 +146,7 @@ task_id: String</td>
 
 Example:
 
-<table>
-  <tr>
-    <td>{
+```{
     "title": "Example",
     "description": "This is an example of an amazing task",
     "reward": 5,
@@ -171,19 +169,12 @@ Example:
     	}
     ],
    
-}
-</td>
-  </tr>
-  <tr>
-    <td>{
-  "message": "We have created a new task! The id for the task is    	  
-	  	  58d3ee0844a5284dea7b7fe6",
-  "task_id": "58d3ee0844a5284dea7b7fe6"
-}
-</td>
-  </tr>
-</table>
+}```
 
+```{
+    "message": "We have created a new task! The id for the task is 58d3ee0844a5284dea7b7fe6",
+    "task_id": "58d3ee0844a5284dea7b7fe6"
+}
 
 ## PUT /tasks/:task_id
 
