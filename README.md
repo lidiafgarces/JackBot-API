@@ -146,7 +146,8 @@ task_id: String</td>
 
 Example:
 
-```{
+```
+{
     "title": "Example",
     "description": "This is an example of an amazing task",
     "reward": 5,
@@ -169,12 +170,15 @@ Example:
     	}
     ],
    
-}```
+}
+```
 
-```{
+```
+{
     "message": "We have created a new task! The id for the task is 58d3ee0844a5284dea7b7fe6",
     "task_id": "58d3ee0844a5284dea7b7fe6"
 }
+```
 
 ## PUT /tasks/:task_id
 
@@ -188,36 +192,36 @@ It deletes the task corresponding to ‘task_id’.
 
 It retrieves all answers for the task corresponding to ‘task_id’.
 
-## GET /answers
+## GET /answers
 
 It retrieves all answers with its associated task.
 
-## GET /tasks/:task_id/answers/:answer_id**
+## GET /tasks/:task_id/answers/:answer_id**
 
 It retrieves the answer with the correspondly ‘answer_id’.
 
-## POST /tasks/:task_id/answers**
+## POST /tasks/:task_id/answers**
 
 It adds an answer to the database.
 
 You should provide a JSON with the following fields:
 
-<table>
-  <tr>
-    <td>user_id: String,
+```
+user_id: String,
 task_id: String,
 answer: [{
     	answer_text: String,
     	answer_picture_url: String,
 }]
-</td>
-    <td>user_id: optional,
+```
+
+```
+user_id: optional,
 task_id: mandatory,
 answers: mandatory
     	answer_text: optional,
-    	answer_picture_url: optional,</td>
-  </tr>
-</table>
+    	answer_picture_url: optional,</td>
+```
 
 
 * ‘user_id’: the id of the user that completed this task. This is an optional field.
@@ -232,19 +236,14 @@ answers: mandatory
 
 Successful requests answer with the following JSON:
 
-<table>
-  <tr>
-    <td>message: String,
-answer_id: String</td>
-  </tr>
-</table>
-
+```
+message: String,
+answer_id: String
+```
 
 Example:
-
-<table>
-  <tr>
-    <td>{
+```
+{
     "task_id": "58d393d08378af349b49c859",
     "answers": [
     {
@@ -254,23 +253,20 @@ Example:
     	"answer_text": "neutral"
     }]
 }
-</td>
-  </tr>
-  <tr>
-    <td>{
+```
+```
+{
   "message": "We have created a new answer! The id of the answer is     	
     	    	58d3f0b65d9d9a4ea7464136",
   "answer_id": "58d3f0b65d9d9a4ea7464136"
 }
-</td>
-  </tr>
-</table>
+```
 
 
 ## PUT/tasks/:task_id/answers/:task_id
 
 It edits the answer corresponding to ‘answer_id’. Same JSON as POST /answers**.**
 
-## DELETE /tasks/:task_id/answers/:answer_id
+## DELETE /tasks/:task_id/answers/:answer_id
 
 It deletes the answer corresponding to ‘answer_id’.
