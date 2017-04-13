@@ -1,0 +1,11 @@
+{
+  "name": "JackBot API",
+  "repository": "https://github.com/lidiafgarces/JackBot-API",
+  "keywords": ["nodejs", "api", "jackbot"],
+  "addons": [
+    {
+    "plan": "mongolab:sandbox",
+    "as": "MONGODB_URI"
+  },
+  ]
+}
