@@ -22,23 +22,23 @@ You can deploy directly to Heroku with the button below.
 
 The API has following endpoints:
 
-**GET /tasks**
+### GET /tasks
 
 It retrieves the full list of tasks from the database.
 
-**GET /tasks/todo**
+### GET /tasks/todo
 
 It retrieves the list of tasks that do not have a enough answers from the database.
 
-**DELETE /tasks/deleteAll**
+### DELETE /tasks/deleteAll
 
 It retrieves the list of tasks that do not have a enough answers from the database.E
 
-**GET /tasks/:task_id**
+### GET /tasks/:task_id
 
 It retrieves the task with the correspondly ‘task_id’.
 
-**POST /tasks**
+### POST /tasks
 
 It adds a task to the database.
 
@@ -185,27 +185,27 @@ Example:
 </table>
 
 
-**PUT /tasks/:task_id**
+## PUT /tasks/:task_id
 
 It edits the task corresponding to ‘task_id’. Same JSON as POST /tasks**.**
 
-**DELETE /tasks/:task_id**
+## DELETE /tasks/:task_id
 
 It deletes the task corresponding to ‘task_id’.
 
-**GET /tasks/:task_id/answers**
+## GET /tasks/:task_id/answers
 
 It retrieves all answers for the task corresponding to ‘task_id’.
 
-**GET /answers**
+## GET /answers
 
 It retrieves all answers with its associated task.
 
-**GET /tasks/:task_id/answers/:answer_id**
+## GET /tasks/:task_id/answers/:answer_id**
 
 It retrieves the answer with the correspondly ‘answer_id’.
 
-**POST /tasks/:task_id/answers**
+## POST /tasks/:task_id/answers**
 
 It adds an answer to the database.
 
@@ -276,10 +276,10 @@ Example:
 </table>
 
 
-**PUT/tasks/:task_id/answers/:task_id**
+## PUT/tasks/:task_id/answers/:task_id
 
 It edits the answer corresponding to ‘answer_id’. Same JSON as POST /answers**.**
 
-**DELETE /tasks/:task_id/answers/:answer_id**
+## DELETE /tasks/:task_id/answers/:answer_id
 
 It deletes the answer corresponding to ‘answer_id’.
