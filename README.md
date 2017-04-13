@@ -18,7 +18,7 @@ You can deploy directly to Heroku with the button below.
 
 ## Instructions
 
-**_You can find the API in: https://serene-sea-69467.herokuapp.com/api_**
+**_You can find the API already deployed in: https://serene-sea-69467.herokuapp.com/api_**
 
 The API has following endpoints:
 
@@ -32,7 +32,7 @@ It retrieves the list of tasks that do not have a enough answers from the databa
 
 ### DELETE /tasks/deleteAll
 
-It retrieves the list of tasks that do not have a enough answers from the database.E
+It retrieves the list of tasks that do not have a enough answers from the database.
 
 ### GET /tasks/:task_id
 
@@ -88,7 +88,7 @@ items: mandatory
     item_picture_url: optional
     item_options: optional
     item_answer_type: mandatory     	    	
-        -(text, picture, option)</td>
+        -(text, picture, option)
 ```
 
 
@@ -130,14 +130,12 @@ items: mandatory
 
         * ‘item_options’: when you want to give a pool of answers for the question.
 
-Successful requests answer with the following JSON:
+Successful requests answer will have the following JSON:
 
-<table>
-  <tr>
-    <td>message: String,
-task_id: String</td>
-  </tr>
-</table>
+```
+message: String,
+task_id: String
+```
 
 
 Example:
@@ -178,7 +176,7 @@ Example:
 
 ## PUT /tasks/:task_id
 
-It edits the task corresponding to ‘task_id’. Same JSON as POST /tasks**.**
+It edits the task corresponding to ‘task_id’. Same JSON as POST /tasks.
 
 ## DELETE /tasks/:task_id
 
@@ -192,11 +190,11 @@ It retrieves all answers for the task corresponding to ‘task_id’.
 
 It retrieves all answers with its associated task.
 
-## GET /tasks/:task_id/answers/:answer_id**
+## GET /tasks/:task_id/answers/:answer_id
 
 It retrieves the answer with the correspondly ‘answer_id’.
 
-## POST /tasks/:task_id/answers**
+## POST /tasks/:task_id/answers
 
 It adds an answer to the database.
 
@@ -261,7 +259,7 @@ Example:
 
 ## PUT/tasks/:task_id/answers/:task_id
 
-It edits the answer corresponding to ‘answer_id’. Same JSON as POST /answers**.**
+It edits the answer corresponding to ‘answer_id’. Same JSON as POST /answers.
 
 ## DELETE /tasks/:task_id/answers/:answer_id
 
