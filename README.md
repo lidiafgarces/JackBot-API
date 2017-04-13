@@ -44,9 +44,8 @@ It adds a task to the database.
 
 You should provide a JSON with the following fields
 
-<table>
-  <tr>
-    <td>title: String,
+```
+title: String,
 description: String,
 reward: Number,
 number_of_answers: Number,
@@ -69,31 +68,28 @@ items: [{
     	item_options: [String],
     	item_answer_type: String,
 }]
-</td>
-    <td>title: mandatory
+```
+```
+title: mandatory
 description: mandatory
 reward: mandatory
 number_of_answers: optional,
 needs_review: optional,
 flag_out_users: optional,
 location: optional
-
-
-
 webhook_url: {
     	host: optional,
     	port: optional,
     	path: optional,
     },
-
 items: mandatory
     item_question: mandatory
     item_text: optional
     item_picture_url: optional
     item_options: optional
-    item_answer_type: mandatory     	    	-(text, picture, option)</td>
-  </tr>
-</table>
+    item_answer_type: mandatory     	    	
+        -(text, picture, option)</td>
+```
 
 
 * You have to provide a title (‘title’), a description (‘description’) and reward (‘reward’) for the task.
